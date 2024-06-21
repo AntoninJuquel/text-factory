@@ -71,6 +71,21 @@
     @apply border-border;
   }
   body {
-    @apply bg-transparent text-background;
+    @apply h-full;
+    @apply bg-transparent text-foreground;
+  }
+  #root {
+    @apply h-full;
+  }
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[#555] rounded-md;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
   }
 }

@@ -14,7 +14,7 @@
     "baseUrl": ".",
     "noUnusedLocals": false,
     "paths": {
-      "@/*":[
+      "@main/*":[
         "src/main/*"
       ],
       "@shared/*": [

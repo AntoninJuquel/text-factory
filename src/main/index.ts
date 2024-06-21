@@ -1,7 +1,25 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import {
+  createTemplate,
+  deleteTemplate,
+  readTemplate,
+  readTemplates,
+  updateTemplate
+} from '@main/lib'
+import {
+  CreateTemplate,
+  DeleteTemplate,
+  ReadTemplate,
+  ReadTemplates,
+  UpdateTemplate
+} from '@shared/models'
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import log from 'electron-log/main'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
+
+log.initialize()
+log.info('App starting...')
 
 function createWindow(): void {
   // Create the browser window.
@@ -10,14 +28,14 @@ function createWindow(): void {
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon,
     center: true,
     title: 'Text Factory',
-    vibrancy: 'under-window',
-    visualEffectState: 'active',
-    trafficLightPosition: { x: 15, y: 10 },
-    backgroundMaterial: 'acrylic',
+    // backgroundMaterial: 'acrylic',
     // titleBarStyle: 'hidden',
+    // vibrancy: 'under-window',
+    // visualEffectState: 'active',
+    // trafficLightPosition: { x: 15, y: 10 },
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: true,
@@ -26,6 +44,7 @@ function createWindow(): void {
   })
 
   mainWindow.on('ready-to-show', () => {
+    mainWindow.maximize()
     mainWindow.show()
   })
 
@@ -57,8 +76,17 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.handle('createTemplate', (_, ...args: Parameters<CreateTemplate>) =>
+    createTemplate(...args)
+  )
+  ipcMain.handle('readTemplates', (_, ...args: Parameters<ReadTemplates>) => readTemplates(...args))
+  ipcMain.handle('readTemplate', (_, ...args: Parameters<ReadTemplate>) => readTemplate(...args))
+  ipcMain.handle('updateTemplate', (_, ...args: Parameters<UpdateTemplate>) =>
+    updateTemplate(...args)
+  )
+  ipcMain.handle('deleteTemplate', (_, ...args: Parameters<DeleteTemplate>) =>
+    deleteTemplate(...args)
+  )
 
   createWindow()
 
