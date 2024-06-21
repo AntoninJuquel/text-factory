@@ -10,6 +10,10 @@ Templates are stored locally on the user's machine in it's home directory.
 - macOS: `~/TextFactory`
 - linux: `~/.TextFactory`
 
+## Screenshot
+
+![image](https://github.com/AntoninJuquel/text-factory/assets/57025128/59d3f209-7de0-4804-8200-338ba4c1b505)
+
 ## Features
 
 - Create and manage text templates
