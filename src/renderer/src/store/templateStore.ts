@@ -54,7 +54,7 @@ const useTemplateStore = create<TemplateStore>((set, get) => ({
     },
     readTemplates: async () => {
       const templates = await window.context.readTemplates()
-      set(() => ({ templates }))
+      set(() => ({ templates: templates.sort((a, b) => b.lastEditedTime - a.lastEditedTime) }))
       return templates
     },
     readTemplate: async (title) => {
